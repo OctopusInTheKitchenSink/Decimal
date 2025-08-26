@@ -1,0 +1,146 @@
+#include <stdio.h>
+#include "../s21_decimal.h"
+
+#test test1
+  int num1 = 1;
+  int num2 = 1;
+  s21_decimal dec1, dec2;
+  s21_from_int_to_decimal(num1, &dec1);
+  s21_from_int_to_decimal(num2, &dec2);
+  int res = s21_is_less_or_equal(dec1, dec2);
+  ck_assert_int_eq(res, 1);
+
+#test test2
+  int num1 = -1;
+  int num2 = 1;
+  s21_decimal dec1, dec2;
+  s21_from_int_to_decimal(num1, &dec1);
+  s21_from_int_to_decimal(num2, &dec2);
+  int res = s21_is_less_or_equal(dec1, dec2);
+  ck_assert_int_eq(res, 1);
+
+#test test3
+  int num1 = -1;
+  int num2 = -1;
+  s21_decimal dec1, dec2;
+  s21_from_int_to_decimal(num1, &dec1);
+  s21_from_int_to_decimal(num2, &dec2);
+  int res = s21_is_less_or_equal(dec1, dec2);
+  ck_assert_int_eq(res, 1);
+  
+#test test4
+  int num1 = 1;
+  int num2 = -1;
+  s21_decimal dec1, dec2;
+  s21_from_int_to_decimal(num1, &dec1);
+  s21_from_int_to_decimal(num2, &dec2);
+  int res = s21_is_less_or_equal(dec1, dec2);
+  ck_assert_int_eq(res, 0);
+
+#test test5
+  int num1 = 1;
+  int num2 = -1;
+  s21_decimal dec1, dec2;
+  s21_from_int_to_decimal(num1, &dec1);
+  s21_from_int_to_decimal(num2, &dec2);
+  int res = s21_is_greater_or_equal(dec1, dec2);
+  ck_assert_int_eq(res, 1);
+
+#test test6
+  int num1 = -1;
+  int num2 = 1;
+  s21_decimal dec1, dec2;
+  s21_from_int_to_decimal(num1, &dec1);
+  s21_from_int_to_decimal(num2, &dec2);
+  int res = s21_is_greater_or_equal(dec1, dec2);
+  ck_assert_int_eq(res, 0);
+
+#test test7
+  int num1 = 1;
+  int num2 = 1;
+  s21_decimal dec1, dec2;
+  s21_from_int_to_decimal(num1, &dec1);
+  s21_from_int_to_decimal(num2, &dec2);
+  int res = s21_is_greater_or_equal(dec1, dec2);
+  ck_assert_int_eq(res, 1);
+
+#test test8
+  int num1 = -1;
+  int num2 = -1;
+  s21_decimal dec1, dec2;
+  s21_from_int_to_decimal(num1, &dec1);
+  s21_from_int_to_decimal(num2, &dec2);
+  int res = s21_is_greater_or_equal(dec1, dec2);
+  ck_assert_int_eq(res, 1);
+
+#test test9
+  int num1 = -10;
+  int num2 = -1;
+  s21_decimal dec1, dec2;
+  s21_from_int_to_decimal(num1, &dec1);
+  s21_from_int_to_decimal(num2, &dec2);
+  int res = s21_is_greater_or_equal(dec1, dec2);
+  ck_assert_int_eq(res, 0);
+
+#test test10
+  int num1 = -10;
+  int num2 = -100;
+  s21_decimal dec1, dec2;
+  s21_from_int_to_decimal(num1, &dec1);
+  s21_from_int_to_decimal(num2, &dec2);
+  int res = s21_is_greater_or_equal(dec1, dec2);
+  ck_assert_int_eq(res, 1);
+
+#test test11
+  int num1 = 1;
+  int num2 = -1;
+  s21_decimal dec1, dec2;
+  s21_from_int_to_decimal(num1, &dec1);
+  s21_from_int_to_decimal(num2, &dec2);
+  int res = s21_is_greater_or_equal(dec1, dec2);
+  ck_assert_int_eq(res, 1);
+
+#test test12
+  int num1 = -1;
+  int num2 = -1;
+  s21_decimal dec1, dec2;
+  s21_from_int_to_decimal(num1, &dec1);
+  s21_from_int_to_decimal(num2, &dec2);
+  int res = s21_is_not_equal(dec1, dec2);
+  ck_assert_int_eq(res, 0);
+
+#test test13
+  int num1 = -10;
+  int num2 = -1;
+  s21_decimal dec1, dec2;
+  s21_from_int_to_decimal(num1, &dec1);
+  s21_from_int_to_decimal(num2, &dec2);
+  int res = s21_is_not_equal(dec1, dec2);
+  ck_assert_int_eq(res, 1);
+
+#test test14
+  int num1 = -10;
+  int num2 = -100;
+  s21_decimal dec1, dec2;
+  s21_from_int_to_decimal(num1, &dec1);
+  s21_from_int_to_decimal(num2, &dec2);
+  int res = s21_is_not_equal(dec1, dec2);
+  ck_assert_int_eq(res, 1);
+
+#test test15
+  int num1 = 1;
+  int num2 = -1;
+  s21_decimal dec1, dec2;
+  s21_from_int_to_decimal(num1, &dec1);
+  s21_from_int_to_decimal(num2, &dec2);
+  int res = s21_is_not_equal(dec1, dec2);
+  ck_assert_int_eq(res, 1);
+
+#test test16
+  int num1 = 1;
+  int num2 = 1;
+  s21_decimal dec1, dec2;
+  s21_from_int_to_decimal(num1, &dec1);
+  s21_from_int_to_decimal(num2, &dec2);
+  int res = s21_is_not_equal(dec1, dec2);
+  ck_assert_int_eq(res, 0);

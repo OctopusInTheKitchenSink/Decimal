@@ -1,0 +1,171 @@
+#include "../s21_decimal.h"
+
+#test test1
+s21_decimal dec1;
+dec1.bits[0] = 0b10010011111100000001110001010010;
+dec1.bits[1] = 0b00000000000000000000000100100000;
+dec1.bits[2] = 0b00000000000000000000000000000000;
+dec1.bits[3] = 0b00000000000010100000000000000000;
+s21_decimal result;
+result.bits[0] = 0b00000000000000000000000001111011;
+result.bits[1] = 0b00000000000000000000000000000000;
+result.bits[2] = 0b00000000000000000000000000000000;
+result.bits[3] = 0b00000000000000000000000000000000;
+s21_decimal res1 = {0};
+s21_floor(dec1, &res1);
+ck_assert_float_eq(res1.bits[0], result.bits[0]);
+ck_assert_float_eq(res1.bits[1], result.bits[1]);
+ck_assert_float_eq(res1.bits[2], result.bits[2]);
+ck_assert_float_eq(res1.bits[3], result.bits[3]);
+
+#test test2
+s21_decimal dec1;
+dec1.bits[0] = 0b00000000000000000000000010100101;
+dec1.bits[1] = 0b00000000000000000000000000000000;
+dec1.bits[2] = 0b00000000000000000000000000000000;
+dec1.bits[3] = 0b00000000000000010000000000000000;
+s21_decimal result;
+result.bits[0] = 0b00000000000000000000000000010000;
+result.bits[1] = 0b00000000000000000000000000000000;
+result.bits[2] = 0b00000000000000000000000000000000;
+result.bits[3] = 0b00000000000000000000000000000000;
+s21_decimal res1;
+s21_floor(dec1, &res1);
+ck_assert_float_eq(res1.bits[0], result.bits[0]);
+ck_assert_float_eq(res1.bits[1], result.bits[1]);
+ck_assert_float_eq(res1.bits[2], result.bits[2]);
+ck_assert_float_eq(res1.bits[3], result.bits[3]);
+
+#test test3
+s21_decimal dec1;
+dec1.bits[0] = 0b10010011111111111111110001010010;
+dec1.bits[1] = 0b00000000000000000000000000000000;
+dec1.bits[2] = 0b00000000000000000000000000000000;
+dec1.bits[3] = 0b00000000000000110000000000000000;
+s21_decimal result;
+result.bits[0] = 0b00000000001001011110001101010011;
+result.bits[1] = 0b00000000000000000000000000000000;
+result.bits[2] = 0b00000000000000000000000000000000;
+result.bits[3] = 0b00000000000000000000000000000000;
+s21_decimal res1;
+s21_floor(dec1, &res1);
+ck_assert_float_eq(res1.bits[0], result.bits[0]);
+ck_assert_float_eq(res1.bits[1], result.bits[1]);
+ck_assert_float_eq(res1.bits[2], result.bits[2]);
+ck_assert_float_eq(res1.bits[3], result.bits[3]);
+
+#test test4
+s21_decimal dec1;
+dec1.bits[0] = 0b10010011111111111111110001010011;
+dec1.bits[1] = 0b00000000000000000000000000000000;
+dec1.bits[2] = 0b00000000000000000000000000000000;
+dec1.bits[3] = 0b10000000000000110000000000000000;
+s21_decimal result;
+result.bits[0] = 0b00000000001001011110001101010100;
+result.bits[1] = 0b00000000000000000000000000000000;
+result.bits[2] = 0b00000000000000000000000000000000;
+result.bits[3] = 0b10000000000000000000000000000000;
+s21_decimal res1;
+s21_floor(dec1, &res1);
+ck_assert_float_eq(res1.bits[0], result.bits[0]);
+ck_assert_float_eq(res1.bits[1], result.bits[1]);
+ck_assert_float_eq(res1.bits[2], result.bits[2]);
+ck_assert_float_eq(res1.bits[3], result.bits[3]);
+
+#test test5
+s21_decimal dec1;
+dec1.bits[0] = 0b00001111111111111111111111111111;
+dec1.bits[1] = 0b00111110001001010000001001100001;
+dec1.bits[2] = 0b00100000010011111100111001011110;
+dec1.bits[3] = 0b00000000000010100000000000000000;
+s21_decimal res1;
+s21_floor(dec1, &res1);
+s21_decimal expected;
+s21_from_int_to_decimal(99, &expected);
+s21_decimal truncated_dec1;
+s21_truncate(dec1, &truncated_dec1);
+for(int i = 0; i < 4; ++i)
+	ck_assert_int_eq(res1.bits[i], truncated_dec1.bits[i]);
+
+
+#test test6
+s21_decimal dec1;
+dec1.bits[0] = 0b00001111111111111111111111111111;
+dec1.bits[1] = 0b00111110001001010000001001100001;
+dec1.bits[2] = 0b00100000010011111100111001011110;
+dec1.bits[3] = 0b10000000000010100000000000000000;
+s21_decimal res1;
+s21_floor(dec1, &res1);
+s21_decimal result;
+result.bits[0] = 0b10100111011001000000000000000000;
+result.bits[1] = 0b00001101111000001011011010110011;
+result.bits[2] = 0b00000000000000000000000000000000;
+result.bits[3] = 0b10000000000000000000000000000000;
+ck_assert_float_eq(res1.bits[0], result.bits[0]);
+ck_assert_float_eq(res1.bits[1], result.bits[1]);
+ck_assert_float_eq(res1.bits[2], result.bits[2]);
+ck_assert_float_eq(res1.bits[3], result.bits[3]);
+
+#test test8
+s21_decimal digit = {0}, res = {0};
+s21_from_int_to_decimal(222, &digit);
+s21_floor(digit, &res);
+ck_assert_int_eq(digit.bits[0], res.bits[0]);
+ck_assert_int_eq(digit.bits[1], res.bits[1]);
+ck_assert_int_eq(digit.bits[2], res.bits[2]);
+ck_assert_int_eq(digit.bits[3], res.bits[3]);
+
+#test test9
+s21_decimal src1;
+// src1 = -12345677.187654345678987654346;
+src1.bits[0] = 0b01111000100010101111010011001010;
+src1.bits[1] = 0b01100010000010101110010010000111;
+src1.bits[2] = 0b00100111111001000001101011010101;
+src1.bits[3] = 0b10000000000101010000000000000000;
+s21_decimal origin = {0};
+origin.bits[0] = 0b00000000101111000110000101001110;
+origin.bits[1] = 0b00000000000000000000000000000000;
+origin.bits[2] = 0b00000000000000000000000000000000;
+origin.bits[3] = 0b10000000000000000000000000000000;
+s21_decimal result = {0};
+s21_floor(src1, &result);
+ck_assert_int_eq(origin.bits[3], result.bits[3]);
+ck_assert_int_eq(origin.bits[2], result.bits[2]);
+ck_assert_int_eq(origin.bits[1], result.bits[1]);
+ck_assert_int_eq(origin.bits[0], result.bits[0]);
+
+#test test10
+s21_decimal src1;
+src1.bits[0] = 0b00000000000000000000000000000001;
+src1.bits[1] = 0b00000000000000000000000000000000;
+src1.bits[2] = 0b00000000000000000000000000000000;
+src1.bits[3] = 0b00000000000000000000000000000000;
+s21_decimal origin = {0};
+origin.bits[0] = 0b00000000000000000000000000000001;
+origin.bits[1] = 0b00000000000000000000000000000000;
+origin.bits[2] = 0b00000000000000000000000000000000;
+origin.bits[3] = 0b00000000000000000000000000000000;
+s21_decimal result = {0};
+s21_floor(src1, &result);
+ck_assert_int_eq(origin.bits[3], result.bits[3]);
+ck_assert_int_eq(origin.bits[2], result.bits[2]);
+ck_assert_int_eq(origin.bits[1], result.bits[1]);
+ck_assert_int_eq(origin.bits[0], result.bits[0]);
+
+#test test11
+s21_decimal src1;
+src1.bits[0] = 0b00010010001110001101100101011111;
+src1.bits[1] = 0b00110001000111111101100110110011;
+src1.bits[2] = 0b00000000000000000000000000000001;
+src1.bits[3] = 0b00000000000100110000000000000000;
+s21_decimal origin = {0};
+origin.bits[0] = 0b00000000000000000000000000000010;
+origin.bits[1] = 0b00000000000000000000000000000000;
+origin.bits[2] = 0b00000000000000000000000000000000;
+origin.bits[3] = 0b00000000000000000000000000000000;
+s21_decimal result = {0};
+s21_floor(src1, &result);
+ck_assert_int_eq(origin.bits[3], result.bits[3]);
+ck_assert_int_eq(origin.bits[2], result.bits[2]);
+ck_assert_int_eq(origin.bits[1], result.bits[1]);
+ck_assert_int_eq(origin.bits[0], result.bits[0]);

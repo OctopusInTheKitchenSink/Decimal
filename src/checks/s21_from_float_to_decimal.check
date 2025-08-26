@@ -1,0 +1,125 @@
+#include "../s21_decimal.h"
+
+#test test1
+float src = 0.0;
+s21_decimal value_1 = {0};
+s21_decimal value_2 = {0};
+s21_from_float_to_decimal(src, &value_1);
+ck_assert_int_eq(value_1.bits[0], value_2.bits[0]);
+ck_assert_int_eq(value_1.bits[1], value_2.bits[1]);
+ck_assert_int_eq(value_1.bits[2], value_2.bits[2]);
+ck_assert_int_eq(value_1.bits[3], value_2.bits[3]);
+
+#test test2
+float src = 1.23456789999;
+float temp = 0;
+int return_value = 0;
+s21_decimal value_1 = {0};
+return_value = s21_from_float_to_decimal(src, &value_1);
+s21_from_decimal_to_float(value_1, &temp);
+ck_assert_float_eq_tol(src, temp, 1e-06);
+ck_assert_int_eq(return_value, 0);
+
+#test test3
+s21_decimal val;
+float fl1 = -333.22222;
+float fl2 = -2.1474836E+20;
+float fl1_res = 0;
+float fl2_res = 0;
+s21_from_float_to_decimal(fl1, &val);
+s21_from_decimal_to_float(val, &fl1_res);
+ck_assert_double_eq_tol(fl1, fl1_res, 1e-04);
+s21_from_float_to_decimal(fl2, &val);
+s21_from_decimal_to_float(val, &fl2_res);
+ck_assert_double_eq_tol(fl2, fl2_res, 1e14);
+
+#test test4
+float src = 7.92281625143e+30;
+int return_value = 0;
+s21_decimal value_1 = {0};
+return_value = s21_from_float_to_decimal(src, &value_1);
+ck_assert_int_eq(return_value, 1);
+
+#test test5
+float src = 7.92281577919e+28;
+float temp = 0;
+int return_value = 0;
+s21_decimal value_1 = {0};
+s21_from_float_to_decimal(src, &value_1);
+s21_from_decimal_to_float(value_1, &temp);
+ck_assert_float_eq_tol(src, temp, 1e22);
+ck_assert_float_eq(src, temp);
+ck_assert_int_eq(return_value, 0);
+
+#test test6
+float src = 1e-29f;
+int return_value = 0;
+s21_decimal value_1 = {0};
+return_value = s21_from_float_to_decimal(src, &value_1);
+ck_assert_int_eq(return_value, 1);
+
+#test test7
+s21_decimal val;
+float num = -2147483600.0;
+s21_from_float_to_decimal(-2147483600.0, &val);
+float res;
+s21_from_decimal_to_float(val, &res);
+ck_assert_double_eq_tol(res, num, 1e3);
+
+#test test8
+s21_decimal val;
+s21_from_float_to_decimal(1.02E+09, &val);
+ck_assert_int_eq(val.bits[0], 1020000000);
+ck_assert_int_eq(val.bits[1], 0);
+ck_assert_int_eq(val.bits[2], 0);
+ck_assert_int_eq(val.bits[3], 0);
+
+#test test9
+s21_decimal val;
+float a = 1e-30;
+s21_from_float_to_decimal(a, &val);
+ck_assert_int_eq(val.bits[0], 0);
+ck_assert_int_eq(val.bits[1], 0);
+ck_assert_int_eq(val.bits[2], 0);
+ck_assert_int_eq(val.bits[3], 0);
+
+#test test10
+s21_decimal dec;
+float tmp = 0;
+float tmp1 = 0.03;
+s21_from_float_to_decimal(tmp1, &dec);
+s21_from_decimal_to_float(dec, &tmp);
+ck_assert_float_eq_tol(tmp, tmp1, 1e-06);
+
+#test test11
+float f = NAN;
+s21_decimal result;
+int code = s21_from_float_to_decimal(f, &result);
+ck_assert_int_eq(code, 1);
+
+#test test12
+s21_decimal result;
+int code = s21_from_float_to_decimal(INFINITY, &result);
+ck_assert_int_eq(code, 1);
+
+#test test13
+s21_decimal val = {0};
+s21_from_float_to_decimal(0, &val);
+ck_assert_int_eq(val.bits[0], 0);
+ck_assert_int_eq(val.bits[1], 0);
+ck_assert_int_eq(val.bits[2], 0);
+ck_assert_int_eq(val.bits[3], 0);
+
+#test test14
+s21_decimal res = {0};
+s21_from_int_to_decimal(-0.0, &res);
+ck_assert_int_eq(res.bits[0], 0);
+ck_assert_int_eq(res.bits[1], 0);
+ck_assert_int_eq(res.bits[2], 0);
+ck_assert_int_eq(res.bits[3], 0);
+
+#test test15
+float f = INFINITY;
+s21_decimal result;
+int code = s21_from_float_to_decimal(f, &result);
+ck_assert_int_eq(code, 1);

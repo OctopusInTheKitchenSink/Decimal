@@ -1,0 +1,99 @@
+#include "../s21_decimal.h"
+
+#test test1
+s21_decimal res = {0};
+s21_from_int_to_decimal(0, &res);
+ck_assert_int_eq(res.bits[0], 0);
+ck_assert_int_eq(res.bits[1], 0);
+ck_assert_int_eq(res.bits[2], 0);
+ck_assert_int_eq(res.bits[3], 0);
+
+#test test2
+s21_decimal res = {0};
+s21_from_int_to_decimal(3, &res);
+ck_assert_int_eq(res.bits[0], 3);
+ck_assert_int_eq(res.bits[1], 0);
+ck_assert_int_eq(res.bits[2], 0);
+ck_assert_int_eq(res.bits[3], 0);
+
+#test test3
+s21_decimal res = {0};
+s21_from_int_to_decimal(-3, &res);
+ck_assert_int_eq(res.bits[0], 3);
+ck_assert_int_eq(res.bits[1], 0);
+ck_assert_int_eq(res.bits[2], 0);
+ck_assert_int_eq(res.bits[3], -2147483648);
+
+#test test4
+s21_decimal res = {0};
+s21_from_int_to_decimal(-1000, &res);
+ck_assert_int_eq(res.bits[0], 1000);
+ck_assert_int_eq(res.bits[1], 0);
+ck_assert_int_eq(res.bits[2], 0);
+ck_assert_int_eq(res.bits[3], -2147483648);
+
+#test test5
+s21_decimal res = {0};
+s21_from_int_to_decimal(1000, &res);
+ck_assert_int_eq(res.bits[0], 1000);
+ck_assert_int_eq(res.bits[1], 0);
+ck_assert_int_eq(res.bits[2], 0);
+ck_assert_int_eq(res.bits[3], 0);
+
+#test test6
+s21_decimal res = {0};
+s21_from_int_to_decimal(1000, &res);
+ck_assert_int_eq(res.bits[0], 1000);
+ck_assert_int_eq(res.bits[1], 0);
+ck_assert_int_eq(res.bits[2], 0);
+ck_assert_int_eq(res.bits[3], 0);
+
+#test test7
+int src = -2147483647;
+int temp = 0;
+int return_value = 0;
+s21_decimal value_1 = {0};
+s21_from_int_to_decimal(src, &value_1);
+s21_from_decimal_to_int(value_1, &temp);
+return_value = (src == temp);
+ck_assert_int_eq(return_value, 1);
+
+#test test8
+int src = -0;
+int temp = 0;
+int return_value = 0;
+s21_decimal value_1 = {0};
+s21_from_int_to_decimal(src, &value_1);
+s21_from_decimal_to_int(value_1, &temp);
+return_value = (src == temp);
+ck_assert_int_eq(return_value, 1);
+
+#test test9
+int src = -3135;
+int temp = 0;
+int return_value = 0;
+s21_decimal value_1 = {0};
+s21_from_int_to_decimal(src, &value_1);
+s21_from_decimal_to_int(value_1, &temp);
+return_value = (src == temp);
+ck_assert_int_eq(return_value, 1);
+
+#test test10
+s21_decimal res = {0};
+int r = s21_from_int_to_decimal(2147483649, &res);
+ck_assert_int_eq(0, r);
+
+#test test11
+s21_decimal res = {0};
+int g;
+s21_from_int_to_decimal(33.3, &res);
+s21_from_decimal_to_int(res, &g);
+ck_assert_int_eq(g, 33);
+
+#test test12
+s21_decimal res = {0};
+s21_from_int_to_decimal(-0, &res);
+ck_assert_int_eq(res.bits[0], 0);
+ck_assert_int_eq(res.bits[1], 0);
+ck_assert_int_eq(res.bits[2], 0);
+ck_assert_int_eq(res.bits[3], 0);
