@@ -105,6 +105,12 @@ git clone https://github.com/OctopusInTheKitchenSink/Decimal.git
 cd Decimal/src
 make s21_decimal.a
 
+# для подключения билиотеки к своему файлу, подключите заголовочный файл s21_decimal.h,
+# указав корректные пути
+# при компиляции подключайте динамическую библиотеку. Пример:
+gcc -Wall -Werror -Wextra -std=c11 Your_file.c s21_decimal.a
+./a.out
+
 # если вы захотите проверить корректность работы библиотеки запустите следующую команду
 make test
 
