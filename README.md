@@ -101,7 +101,7 @@ bits[3] содержит коэффициент масштабирования �
 
 ## Установка
 ```
-git clone
+git clone https://github.com/OctopusInTheKitchenSink/Decimal.git
 cd Decimal/src
 make s21_decimal.a
 
