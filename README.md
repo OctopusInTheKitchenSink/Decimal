@@ -105,4 +105,9 @@ git clone https://github.com/OctopusInTheKitchenSink/Decimal.git
 cd Decimal/src
 make s21_decimal.a
 
+# если вы захотите проверить корректность работы библиотеки запустите следующую команду
+make test
+
+# для вывода отчета о покрытии библиотеки тестами выполните следующую команду
+make gcov_report
 ```
